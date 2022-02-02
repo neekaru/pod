@@ -3,7 +3,7 @@ Vanilla GitPod  Ubuntu 22.04 image, with a few system dependencies enabled and G
 
 The VNC support is inspired from the https://github.com/robotology/icub-gazebo-grasping-sandbox .
 
-## Instructions  
+## Instructions
 Click on the following badge to open the GitPod image:
 
 [![Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer)

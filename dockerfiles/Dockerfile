@@ -1,8 +1,4 @@
 FROM ubuntu:22.04
-LABEL org.opencontainers.image.title="Traversaro's Ubuntu 22.04 blank image with VNC support"
-LABEL org.opencontainers.image.description="Infrastructure for running grasping experiments with the iCub humanoid in Gazebo"
-LABEL org.opencontainers.image.source="https://github.com/traversaro/gitpod-ubuntu-20.04"
-LABEL org.opencontainers.image.authors="Silvio Traversaro <silvio.traversaro@iit.it>"
 
 # Non-interactive installation mode
 ENV DEBIAN_FRONTEND=noninteractive
@@ -15,6 +11,17 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
     psmisc tmux nano wget curl telnet gnupg gdb git gitk autoconf locales gdebi \
     terminator meld dos2unix meshlab
 
+# install something
+RUN apt install glances neofetch vim -y && \
+    sudo add-apt-repository universe && add-apt-repository multiverse \
+    apt update && apt upgrade -y
+
+# install Golang And rustc
+RUN wget https://golang.org/dl/go1.17.6.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.17.6.linux-amd64.tar.gz && \
+    sudo mv go /usr/local && \
+    rm -rf *.tar.gz
+
 # Set the locale
 RUN locale-gen en_US.UTF-8
 
@@ -26,11 +33,12 @@ COPY xorg.conf /etc/X11/xorg.conf
 RUN dos2unix /etc/X11/xorg.conf
 
 # Install python
-RUN apt install -y python3 python3-dev python3-pip python3-setuptools
-    
+RUN apt install -y python3 python3-dev python3-pip python3-setuptool && \
+    if [ ! -f "/usr/bin/python" ]; then ln -s /usr/bin/python3 /usr/bin/python; fi
+
 # Install other dependencies
-RUN apt-get install -y bash-completion build-essential cmake cmake-curses-gui coinor-libipopt-dev curl freeglut3-dev git libace-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libdc1394-dev libedit-dev libeigen3-dev libgsl0-dev libjpeg-dev liblua5.1-dev libode-dev libopencv-dev libsdl1.2-dev libtinyxml-dev libv4l-dev libxml2-dev lua5.1 portaudio19-dev qml-module-qt-labs-folderlistmodel qml-module-qt-labs-settings qml-module-qtmultimedia qml-module-qtquick-controls qml-module-qtquick-dialogs qml-module-qtquick-window2 qml-module-qtquick2 qtbase5-dev qtdeclarative5-dev qtmultimedia5-dev swig libmatio-dev libirrlicht-dev libspdlog-dev libblas-dev liblapack-dev wget sudo nlohmann-json3-dev zsh xonsh ninja-build 
-    
+RUN apt-get install -y bash-completion build-essential cmake cmake-curses-gui coinor-libipopt-dev curl freeglut3-dev git libace-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libdc1394-dev libedit-dev libeigen3-dev libgsl0-dev libjpeg-dev liblua5.1-dev libode-dev libopencv-dev libsdl1.2-dev libtinyxml-dev libv4l-dev libxml2-dev lua5.1 portaudio19-dev qml-module-qt-labs-folderlistmodel qml-module-qt-labs-settings qml-module-qtmultimedia qml-module-qtquick-controls qml-module-qtquick-dialogs qml-module-qtquick-window2 qml-module-qtquick2 qtbase5-dev qtdeclarative5-dev qtmultimedia5-dev swig libmatio-dev libirrlicht-dev libspdlog-dev libblas-dev liblapack-dev wget sudo nlohmann-json3-dev zsh xonsh ninja-build
+
 # Install magic-wormwhole to get things from one computer to another safely
 RUN apt install -y magic-wormhole
 
@@ -56,7 +64,14 @@ RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prom
 # Set up .bashrc
 WORKDIR /home/gitpod
 RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
-    echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc
+    echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
+    echo "export GOROOT=/usr/local/go" >> ~/.bashrc && \
+    echo "export GOPATH=$HOME/go" >> ~/.bashrc && \
+    echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.bashrc && \
+    echo "export PATH=\"/home/gitpod/.local/bin:\$PATH\"" >> ~/.bashrc
+
+# setup rustc
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
 
 # Create the Desktop dir
 RUN mkdir -p /home/gitpod/Desktop
@@ -70,7 +85,7 @@ RUN chmod +x /usr/bin/start-vnc-session.sh && \
     dos2unix /usr/bin/start-vnc-session.sh
 
 # Manage ports
-EXPOSE 5901 6080 10000/tcp 10000/udp
+EXPOSE 5901 6080 10000/tcp 10000/udp 61209/tcp 61208/tcp
 
 # Clean up unnecessary installation products
 RUN rm -Rf /var/lib/apt/lists/*

@@ -1,4 +1,4 @@
-image: ghcr.io/traversaro/gitpod-ubuntu-22.04:latest
+image: ghcr.io/Ncode2014/pod:latest
 ports:
 - port: 6080
   onOpen: notify
