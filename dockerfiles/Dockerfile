@@ -13,7 +13,6 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
 
 # install something
 RUN apt install glances neofetch vim -y && \
-    sudo add-apt-repository universe && add-apt-repository multiverse \
     apt update && apt upgrade -y
 
 # install Golang And rustc
