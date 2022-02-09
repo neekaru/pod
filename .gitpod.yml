@@ -1,4 +1,4 @@
-image: ghcr.io/Ncode2014/pod:latest
+image: ghcr.io/ncode2014/pod:latest
 ports:
 - port: 6080
   onOpen: notify
