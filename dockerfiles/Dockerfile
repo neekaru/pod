@@ -16,7 +16,7 @@ RUN apt install glances neofetch vim -y && \
     apt update && apt upgrade -y
 
 # install Golang And rustc
-RUN wget https://golang.org/dl/go1.17.6.linux-amd64.tar.gz && \
+RUN wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz && \
     sudo tar -xvf go1.17.6.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
@@ -32,7 +32,7 @@ COPY xorg.conf /etc/X11/xorg.conf
 RUN dos2unix /etc/X11/xorg.conf
 
 # Install python
-RUN apt install -y python3 python3-dev python3-pip python3-setuptool && \
+RUN apt install -y python3 python3-dev python3-pip python3-setuptools && \
     if [ ! -f "/usr/bin/python" ]; then ln -s /usr/bin/python3 /usr/bin/python; fi
 
 # Install other dependencies
