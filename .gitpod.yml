@@ -4,7 +4,7 @@ ports:
   onOpen: notify
 - port: 10000-20000
   onOpen: ignore
-- port: 61200-61209
+- port: 60000-70000
   onOpen: ignore
 workspaceLocation: "."
 tasks:
