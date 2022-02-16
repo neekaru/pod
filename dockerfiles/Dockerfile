@@ -84,7 +84,7 @@ RUN chmod +x /usr/bin/start-vnc-session.sh && \
     dos2unix /usr/bin/start-vnc-session.sh
 
 # Manage ports
-EXPOSE 5901 6080 10000/tcp 10000/udp 61209/tcp 61208/tcp
+EXPOSE 5901 6080 10000/tcp 10000/udp 61209 61208
 
 # Clean up unnecessary installation products
 RUN rm -Rf /var/lib/apt/lists/*
