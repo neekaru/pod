@@ -12,7 +12,7 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
     terminator meld dos2unix meshlab
 
 # install something
-RUN apt install glances neofetch vim -y && \
+RUN apt install htop neofetch vim -y && \
     apt update && apt upgrade -y
 
 # install Golang And rustc
@@ -84,7 +84,7 @@ RUN chmod +x /usr/bin/start-vnc-session.sh && \
     dos2unix /usr/bin/start-vnc-session.sh
 
 # Manage ports
-EXPOSE 5901 6080 10000/tcp 10000/udp 61209 61208
+EXPOSE 5901 6080 10000/tcp 10000/udp
 
 # Clean up unnecessary installation products
 RUN rm -Rf /var/lib/apt/lists/*
