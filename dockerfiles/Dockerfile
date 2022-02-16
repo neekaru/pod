@@ -16,8 +16,8 @@ RUN apt install glances neofetch vim -y && \
     apt update && apt upgrade -y
 
 # install Golang And rustc
-RUN wget https://go.dev/dl/go1.17.6.linux-amd64.tar.gz && \
-    sudo tar -xvf go1.17.6.linux-amd64.tar.gz && \
+RUN wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.17.7.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
 
