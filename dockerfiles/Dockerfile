@@ -60,17 +60,15 @@ USER gitpod
 # Install informative git for bash
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
+
 # Set up .bashrc
 WORKDIR /home/gitpod
 RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "export GOROOT=/usr/local/go" >> ~/.bashrc && \
     echo "export GOPATH=$HOME/go" >> ~/.bashrc && \
-    echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.bashrc && \
-    echo "export PATH=\"/home/gitpod/.local/bin:\$PATH\"" >> ~/.bashrc
-
-# setup rustc
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
+    echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.bashrc
 
 # Create the Desktop dir
 RUN mkdir -p /home/gitpod/Desktop
