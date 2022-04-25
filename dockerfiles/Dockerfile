@@ -12,11 +12,12 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
     terminator meld dos2unix meshlab
 
 # install something
-RUN apt install htop neofetch vim -y
+RUN apt install htop neofetch vim -y \
+    apt update && apt upgrade -y
 
-# install Golang And rustc
-RUN wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz && \
-    sudo tar -xvf go1.17.7.linux-amd64.tar.gz && \
+# install Golang
+RUN wget https://go.dev/dl/go1.18.1.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.18.1.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
 
@@ -59,15 +60,14 @@ USER gitpod
 # Install informative git for bash
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
-
 # Set up .bashrc
 WORKDIR /home/gitpod
 RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "export GOROOT=/usr/local/go" >> ~/.bashrc && \
     echo "export GOPATH=$HOME/go" >> ~/.bashrc && \
-    echo "export PATH=$GOPATH/bin:$GOROOT/bin:$PATH" >> ~/.bashrc
+    echo "export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH" >> ~/.bashrc && \
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
 
 # Create the Desktop dir
 RUN mkdir -p /home/gitpod/Desktop
