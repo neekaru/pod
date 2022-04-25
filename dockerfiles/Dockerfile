@@ -12,8 +12,7 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
     terminator meld dos2unix meshlab
 
 # install something
-RUN apt install htop neofetch vim -y \
-    apt update && apt upgrade -y
+RUN apt install htop neofetch vim -y && apt update && apt-get upgrade -y
 
 # install Golang
 RUN wget https://go.dev/dl/go1.18.1.linux-amd64.tar.gz && \
