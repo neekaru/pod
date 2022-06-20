@@ -15,17 +15,17 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
 RUN apt install htop neofetch vim -y && apt update && apt-get upgrade -y
 
 # install Golang
-RUN wget https://go.dev/dl/go1.18.1.linux-amd64.tar.gz && \
-    sudo tar -xvf go1.18.1.linux-amd64.tar.gz && \
+RUN wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.18.3.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
-
 # Set the locale
 RUN locale-gen en_US.UTF-8
 
 # Install graphics
 RUN apt install -y xfce4 xfce4-goodies xserver-xorg-video-dummy xserver-xorg-legacy x11vnc firefox && \
-    apt remove -y xfce4-power-manager light-locker && \
+    apt remove -y xfce4-power-manager xfce4-screensaver light-locker && \
+    apt autoremove -y && \
     sed -i 's/allowed_users=console/allowed_users=anybody/' /etc/X11/Xwrapper.config
 COPY xorg.conf /etc/X11/xorg.conf
 RUN dos2unix /etc/X11/xorg.conf
@@ -33,7 +33,7 @@ RUN dos2unix /etc/X11/xorg.conf
 # Install python
 RUN apt install -y python3 python3-dev python3-pip python3-setuptools && \
     if [ ! -f "/usr/bin/python" ]; then ln -s /usr/bin/python3 /usr/bin/python; fi
-
+    
 # Install other dependencies
 RUN apt-get install -y bash-completion build-essential cmake cmake-curses-gui coinor-libipopt-dev curl freeglut3-dev git libace-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libdc1394-dev libedit-dev libeigen3-dev libgsl0-dev libjpeg-dev liblua5.1-dev libode-dev libopencv-dev libsdl1.2-dev libtinyxml-dev libv4l-dev libxml2-dev lua5.1 portaudio19-dev qml-module-qt-labs-folderlistmodel qml-module-qt-labs-settings qml-module-qtmultimedia qml-module-qtquick-controls qml-module-qtquick-dialogs qml-module-qtquick-window2 qml-module-qtquick2 qtbase5-dev qtdeclarative5-dev qtmultimedia5-dev swig libmatio-dev libirrlicht-dev libspdlog-dev libblas-dev liblapack-dev wget sudo nlohmann-json3-dev zsh xonsh ninja-build
 
@@ -67,7 +67,6 @@ RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "export GOPATH=$HOME/go" >> ~/.bashrc && \
     echo "export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH" >> ~/.bashrc && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
-
 # Create the Desktop dir
 RUN mkdir -p /home/gitpod/Desktop
 
