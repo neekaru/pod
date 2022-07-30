@@ -15,8 +15,8 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
 RUN apt install htop neofetch vim -y && apt update && apt-get upgrade -y
 
 # install Golang
-RUN wget https://go.dev/dl/go1.18.3.linux-amd64.tar.gz && \
-    sudo tar -xvf go1.18.3.linux-amd64.tar.gz && \
+RUN wget https://go.dev/dl/go1.18.4.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.18.4.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
 # Set the locale
@@ -67,6 +67,7 @@ RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "export GOPATH=$HOME/go" >> ~/.bashrc && \
     echo "export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH" >> ~/.bashrc && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
+
 # Create the Desktop dir
 RUN mkdir -p /home/gitpod/Desktop
 
