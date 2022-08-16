@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:latest
 
 # Non-interactive installation mode
 ENV DEBIAN_FRONTEND=noninteractive
@@ -15,8 +15,8 @@ RUN apt install -y apt-utils software-properties-common apt-transport-https sudo
 RUN apt install htop neofetch vim -y && apt update && apt-get upgrade -y
 
 # install Golang
-RUN wget https://go.dev/dl/go1.18.4.linux-amd64.tar.gz && \
-    sudo tar -xvf go1.18.4.linux-amd64.tar.gz && \
+RUN wget https://go.dev/dl/go1.19.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.19.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
 # Set the locale
