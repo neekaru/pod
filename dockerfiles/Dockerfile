@@ -1,4 +1,5 @@
 FROM ubuntu:22.04
+
 # Non-interactive installation mode
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -43,7 +44,7 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
 # Install python
 RUN apt install -y python3 python3-dev python3-pip python3-setuptools && \
     if [ ! -f "/usr/bin/python" ]; then ln -s /usr/bin/python3 /usr/bin/python; fi
-    
+
 # Install magic-wormhole to get things from one computer to another safely
 RUN apt install -y magic-wormhole
 
@@ -69,14 +70,14 @@ USER gitpod
 # Install informative git for bash
 RUN git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
 
-# Set up .bashrc
+# Set up .bashrc and PATH for Go
 WORKDIR /home/gitpod
 RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "source \${HOME}/.bash-git-prompt/gitprompt.sh" >> ~/.bashrc && \
     echo "export GOROOT=/usr/local/go" >> ~/.bashrc && \
-    echo "export GOPATH=$HOME/go" >> ~/.bashrc && \
-    echo "export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH" >> ~/.bashrc && \
-    echo "LD_LIBRARY_PATH=/usr/local/lib:\${LD_LIBRARY_PATH}" >>  ~/.bashrc && \
+    echo "export GOPATH=\$HOME/go" >> ~/.bashrc && \
+    echo "export PATH=\$GOPATH/bin:\$GOROOT/bin:\$HOME/.local/bin:\$PATH" >> ~/.bashrc && \
+    echo "LD_LIBRARY_PATH=/usr/local/lib:\${LD_LIBRARY_PATH}" >> ~/.bashrc && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
 
 # Create the Desktop dir
