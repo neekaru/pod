@@ -55,10 +55,6 @@ RUN git clone https://github.com/novnc/noVNC.git /opt/novnc && \
     git clone https://github.com/novnc/websockify /opt/novnc/utils/websockify && \
     echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; url=vnc.html?autoconnect=true&reconnect=true&reconnect_delay=1000&resize=scale&quality=9\"></head></html>" > /opt/novnc/index.html
 
-# Clean up git configuration
-RUN git config --global --unset-all user.name && \
-    git config --global --unset-all user.email
-
 # Set environmental variables
 ENV DISPLAY=:1
 
