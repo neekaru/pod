@@ -44,7 +44,7 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
 RUN apt install -y python3 python3-dev python3-pip python3-setuptools && \
     if [ ! -f "/usr/bin/python" ]; then ln -s /usr/bin/python3 /usr/bin/python; fi
     
-# Install magic-wormwhole to get things from one computer to another safely
+# Install magic-wormhole to get things from one computer to another safely
 RUN apt install -y magic-wormhole
 
 # Install glog
@@ -105,6 +105,9 @@ RUN add-apt-repository -y ppa:kisak/kisak-mesa && \
 
 # Clean up unnecessary installation products
 RUN rm -Rf /var/lib/apt/lists/*
+
+# Ignore all files by creating a .gitignore
+RUN echo "*" > /workspace/.gitignore
 
 # Launch bash from /workspace
 WORKDIR /workspace
