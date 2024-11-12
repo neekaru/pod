@@ -80,7 +80,7 @@ RUN echo "GIT_PROMPT_ONLY_IN_REPO=1" >> ~/.bashrc && \
     echo "export GOROOT=/usr/local/go" >> ~/.bashrc && \
     echo "export GOPATH=$HOME/go" >> ~/.bashrc && \
     echo "export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH" >> ~/.bashrc && \
-    echo "LD_LIBRARY_PATH=/usr/local/lib:\${LD_LIBRARY_PATH}" >>  ~/.bashrc
+    echo "LD_LIBRARY_PATH=/usr/local/lib:\${LD_LIBRARY_PATH}" >>  ~/.bashrc && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly -y
 
 # Create the Desktop dir
