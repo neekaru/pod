@@ -7,21 +7,40 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
 
 # Install essentials
-RUN apt install -y apt-utils software-properties-common apt-transport-https sudo \
-    psmisc tmux nano wget curl telnet gnupg gdb git gitk autoconf locales gdebi \
-    terminator meld dos2unix meshlab
-
-RUN wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
-    sudo dpkg -i packages-microsoft-prod.deb && \
-    rm -f packages-microsoft-prod.deb
-
-# install something
-RUN apt install htop neofetch vim apt-transport-https -y && apt update && apt-get upgrade -y && \
-    sudo apt-get install -y dotnet-sdk-8.0
+RUN apt update && \
+    apt install -y \
+        apt-utils \
+        software-properties-common \
+        apt-transport-https \
+        sudo \
+        psmisc \
+        tmux \
+        nano \
+        wget \
+        curl \
+        telnet \
+        gnupg \
+        gdb \
+        git \
+        gitk \
+        autoconf \
+        locales \
+        gdebi \
+        terminator \
+        meld \
+        dos2unix \
+        meshlab \
+        htop \
+        neofetch \
+        vim && \
+    wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    dpkg -i packages-microsoft-prod.deb && \
+    rm -f packages-microsoft-prod.deb && \
+    apt-get install -y dotnet-sdk-8.0
 
 # install Golang
-RUN wget https://go.dev/dl/go1.23.3.linux-amd64.tar.gz && \
-    sudo tar -xvf go1.23.3.linux-amd64.tar.gz && \
+RUN wget https://go.dev/dl/go1.23.4.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.23.4.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
 
