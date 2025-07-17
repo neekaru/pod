@@ -11,7 +11,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@main
       with:
-        name: ninajika/pod
+        name: neekaru/pod
         username: ${{ github.actor }}
         password: ${{ secrets.GH_TOKEN }}
         workdir: dockerfiles
