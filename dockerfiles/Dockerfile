@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Non-interactive installation mode
 ENV DEBIAN_FRONTEND=noninteractive
@@ -33,14 +33,14 @@ RUN apt update && \
         htop \
         neofetch \
         vim && \
-    wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+    wget https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm -f packages-microsoft-prod.deb && \
     apt-get install -y dotnet-sdk-8.0
 
 # install Golang
-RUN wget https://go.dev/dl/go1.23.4.linux-amd64.tar.gz && \
-    sudo tar -xvf go1.23.4.linux-amd64.tar.gz && \
+RUN wget https://go.dev/dl/go1.24.5.linux-amd64.tar.gz && \
+    sudo tar -xvf go1.24.5.linux-amd64.tar.gz && \
     sudo mv go /usr/local && \
     rm -rf *.tar.gz
 
